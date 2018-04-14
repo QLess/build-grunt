@@ -1,0 +1,32 @@
+{
+  "name": "@qless/build-grunt",
+  "version": "1.0.0",
+  "description": "Unified build module for QLess Grunt based projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'no tests yet'"
+  },
+  "bin": {
+    "grunt": "./index.js"
+  },
+  "author": "Eddie Monge Jr.",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^8.2.0",
+    "grunt": "^1.0.2",
+    "grunt-bump": "^0.8.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-htmlmin": "^2.4.0",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-include-replace": "^5.0.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "^2.1.0",
+    "grunt-war": "^0.5.1",
+    "time-grunt": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^22.4.3"
+  }
+}
