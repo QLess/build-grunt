@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var path = require('path')
 var grunt = require('grunt')
+var pkg = grunt.file.readJSON('package.json')
 
 // Get the tasks passed in to the command
 var TasksArgs = process.argv.slice(2).filter(function (task) {
@@ -48,26 +49,28 @@ var BuildDir = path.resolve(__dirname)
 var cwd = process.cwd()
 
 // Load all the required grunt task plugins. Requires first changing to here
-// and then changing back after the tasks are run
+// and then changing back after the tasks are run. Since grunt doesn't report
+// when it can't load something, "spy" on its error
+var err = grunt.log.error
+var missing = []
+grunt.log.error = function (msg) {
+  var match = /Local Npm module "([a-zA-Z0-9-_@/]+)" not found/.exec(msg)
+  if (match) {
+    missing.push(match[1])
+  } else {
+    err(msg)
+  }
+}
+grunt.loadNpmTasks(pkg.name)
 process.chdir(BuildDir)
-grunt.loadNpmTasks('grunt-bump')
-grunt.loadNpmTasks('grunt-contrib-clean')
-grunt.loadNpmTasks('grunt-contrib-copy')
-grunt.loadNpmTasks('grunt-contrib-htmlmin')
-grunt.loadNpmTasks('grunt-contrib-uglify')
-grunt.loadNpmTasks('grunt-contrib-watch')
-grunt.loadNpmTasks('grunt-include-replace')
-grunt.loadNpmTasks('grunt-postcss')
-grunt.loadNpmTasks('grunt-sass')
-grunt.loadNpmTasks('grunt-war')
+missing.forEach(grunt.loadNpmTasks)
 process.chdir(cwd)
+grunt.log.error = err
 
 // Helper to load configs
 var reqTask = function (task) {
   return require(path.resolve(BuildDir, 'tasks', task))
 }
-
-var pkg = grunt.file.readJSON('package.json')
 
 grunt.initConfig({
   pkg: pkg,
