@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var path = require('path')
 var grunt = require('grunt')
-var pkg = grunt.file.readJSON('package.json')
+var pkg = require('./package.json')
 
 // Get the tasks passed in to the command
 var TasksArgs = process.argv.slice(2).filter(function (task) {
@@ -72,8 +72,9 @@ var reqTask = function (task) {
   return require(path.resolve(BuildDir, 'tasks', task))
 }
 
+var projPkg = grunt.file.readJSON('package.json')
 grunt.initConfig({
-  pkg: pkg,
+  pkg: projPkg,
   bump: reqTask('bump'),
   clean: reqTask('clean'),
   copy: reqTask('copy'),
@@ -100,13 +101,13 @@ grunt.registerTask('compile', ['clean', 'html', 'css', 'assets'])
 grunt.registerTask('build', [
   'compile',
   'copy:dev',
-  Array.isArray(pkg.buildCopy) ? 'copy:extra' : 'noop',
+  Array.isArray(projPkg.buildCopy) ? 'copy:extra' : 'noop',
   'war:dev'
 ])
 grunt.registerTask('buildprod', [
   'compile',
   'copy:prod',
-  Array.isArray(pkg.buildCopy) ? 'copy:extra' : 'noop',
+  Array.isArray(projPkg.buildCopy) ? 'copy:extra' : 'noop',
   'war:prod'
 ])
 
