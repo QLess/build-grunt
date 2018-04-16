@@ -116,7 +116,7 @@ grunt.registerTask('publish', ['bump', 'buildprod'])
 grunt.registerTask('deploy', ['build', 'copy:war'])
 
 // Development task to create a watch
-grunt.registerTask('dowatch', ['compile', 'watch'])
+grunt.registerTask('dowatch', ['build', 'copy:war', 'watch'])
 
 // Default task(s).
 grunt.registerTask('default', ['build'])

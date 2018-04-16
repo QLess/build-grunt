@@ -1,11 +1,6 @@
 module.exports = {
-  css: {
-    files: ['res/css/sass/*.scss'],
-    tasks: ['css']
-  },
-
-  html: {
-    files: ['res/tmpl/*.html'],
-    tasks: ['html']
+  all: {
+    files: ['res/**/*.*'],
+    tasks: ['html', 'css', 'assets', 'copy:dev', 'war:dev', 'copy:war']
   }
 }
