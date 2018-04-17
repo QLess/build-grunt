@@ -1,6 +1,6 @@
 {
   "name": "@qless/build-grunt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Unified build module for QLess Grunt based projects",
   "main": "index.js",
   "scripts": {
