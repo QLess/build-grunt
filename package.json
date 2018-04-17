@@ -9,6 +9,10 @@
   "bin": {
     "grunt": "./index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QLess/build-grunt"
+  },
   "author": "Eddie Monge Jr.",
   "license": "ISC",
   "dependencies": {
