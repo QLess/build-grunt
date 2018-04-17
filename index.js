@@ -67,7 +67,10 @@ missing.forEach(grunt.loadNpmTasks)
 process.chdir(cwd)
 grunt.log.error = err
 
-// Helper to load configs
+// Helper to load configs/tasks
+var reqConfig = function (task) {
+  return require(path.resolve(BuildDir, 'config', task))
+}
 var reqTask = function (task) {
   return require(path.resolve(BuildDir, 'tasks', task))
 }
@@ -75,16 +78,16 @@ var reqTask = function (task) {
 var projPkg = grunt.file.readJSON('package.json')
 grunt.initConfig({
   pkg: projPkg,
-  bump: reqTask('bump'),
-  clean: reqTask('clean'),
-  copy: reqTask('copy'),
-  htmlmin: reqTask('htmlmin'),
-  includereplace: reqTask('includereplace'),
-  postcss: reqTask('postcss'),
-  sass: reqTask('sass'),
-  uglify: reqTask('uglify'),
-  war: reqTask('war'),
-  watch: reqTask('watch')
+  bump: reqConfig('bump'),
+  clean: reqConfig('clean'),
+  copy: reqConfig('copy'),
+  htmlmin: reqConfig('htmlmin'),
+  includereplace: reqConfig('includereplace'),
+  postcss: reqConfig('postcss'),
+  sass: reqConfig('sass'),
+  uglify: reqConfig('uglify'),
+  war: reqConfig('war'),
+  watch: reqConfig('watch')
 })
 
 // SPECIFY TASKS TO RUN
