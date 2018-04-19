@@ -1,10 +1,10 @@
 module.exports = {
   local: {
-    files: ['res/**/*.*'],
-    tasks: ['html', 'css', 'assets', 'copy:dev', 'war:dev', 'copy:war']
+    files: ['res/**/*'],
+    tasks: ['watchFiles', 'copy:war']
   },
   scp: {
-    files: ['res/**/*.*'],
-    tasks: ['html', 'css', 'assets', 'copy:dev', 'war:dev', 'scp']
+    files: ['res/**/*'],
+    tasks: ['watchFiles', 'scp']
   }
 }

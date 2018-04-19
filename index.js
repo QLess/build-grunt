@@ -117,6 +117,14 @@ grunt.registerTask('publish', ['bump', 'buildprod'])
 grunt.registerTask('deploy', ['build', 'copy:war'])
 
 // Development task to create a watch
+grunt.registerTask('watchFiles', [
+  'htmlChecker',
+  'css',
+  'assets',
+  'copy:dev',
+  'copyExtras',
+  'war:dev'
+])
 grunt.registerTask('dowatch', ['build', 'copy:war', 'watch:local'])
 grunt.registerTask('dowatch:scp', ['build', 'scp', 'watch:scp'])
 
