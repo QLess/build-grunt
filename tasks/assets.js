@@ -1,13 +1,24 @@
 // Returns a function that accepts the grunt object as the only arg
 module.exports = function (grunt) {
   // This is the actual grunt task that gets run
-  return function () {
-    var src = grunt.template.process('<%= htmlmin.html.dest %>')
+  grunt.registerMultiTask('assets', function () {
     var version = grunt.template.process('<%= pkg.version %>')
+    var options = this.options()
 
-    grunt.file.write(
-      src,
-      grunt.file.read(src).replace(
+    this.files.forEach(function (f) {
+      var src = f.src
+      .filter(function(src) {
+        if (!grunt.file.exists(src) || grunt.file.isDir(src)) {
+          grunt.log.warn('Source file "' + src + '" not found.')
+          return false
+        }
+        return true
+      })
+      .map(function(filepath) {
+        return grunt.file.read(filepath);
+      })
+      .join('\n')
+      .replace(
         /<!-- BUILD:START:(CSS|JS):([A-Za-z]+) -->([\s\S]+?)<!-- BUILD:END -->/g,
         function (match, type, name, srcs) {
           type = type.toLowerCase()
@@ -29,11 +40,13 @@ module.exports = function (grunt) {
             name + '.' + version + '.min.' + type
           ].join('/')
 
+
           // Create config
+          var destDir = options.prefix ? options.prefix + '/' : ''
           var config = {}
           config[name] = {
             src: src,
-            dest: 'dist/' + output
+            dest: 'dist/' + destDir + output
           }
 
           if (type === 'css') {
@@ -57,8 +70,14 @@ module.exports = function (grunt) {
           return '<script src="' + output + '"></script>'
         }
       )
-    )
 
-    grunt.log.ok('Updated ' + src + ' with new JS references')
-  }
+      if (src.length < 1) {
+        return
+      }
+
+      grunt.file.write(f.dest, src)
+
+      grunt.log.ok('Updated new JS references in ' + f.dest)
+    })
+  })
 }

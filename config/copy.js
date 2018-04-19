@@ -9,8 +9,6 @@ var ignoredFiles = [
 
 var includeFiles = [
   'app/index.html',
-  'login/index.html',
-  'logout/index.html',
   'res/imgs/**/*',
   'res/js/lib/googleanalytics.js',
   'res/js/lib/raven.min.js',
@@ -37,14 +35,6 @@ module.exports = {
       expand: true,
       cwd: '',
       src: [].concat(includeFiles, ignoredFiles),
-      dest: 'dist'
-    }]
-  },
-  extra: {
-    files: [{
-      expand: true,
-      cwd: '',
-      src: '<%= pkg.buildCopy %>',
       dest: 'dist'
     }]
   },

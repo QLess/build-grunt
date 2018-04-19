@@ -1,7 +1,7 @@
 // Returns a function that accepts the grunt object as the only arg
 module.exports = function (grunt) {
   // This is the actual grunt task that gets run
-  return function () {
+  grunt.registerTask('scp', function () {
     var done = this.async()
     var exec = require('child_process').exec
     var verbose = grunt.option('verbose')
@@ -38,5 +38,5 @@ module.exports = function (grunt) {
         done(true)
       }
     })
-  }
+  })
 }

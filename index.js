@@ -64,6 +64,7 @@ grunt.log.error = function (msg) {
 grunt.loadNpmTasks(pkg.name)
 process.chdir(BuildDir)
 missing.forEach(grunt.loadNpmTasks)
+grunt.loadTasks(path.join(BuildDir, 'tasks'))
 process.chdir(cwd)
 grunt.log.error = err
 
@@ -81,7 +82,9 @@ grunt.initConfig({
   bump: reqConfig('bump'),
   clean: reqConfig('clean'),
   copy: reqConfig('copy'),
+  copyExtras: reqConfig('copyExtras'),
   htmlmin: reqConfig('htmlmin'),
+  htmlChecker: reqConfig('html-checker'),
   includereplace: reqConfig('includereplace'),
   postcss: reqConfig('postcss'),
   sass: reqConfig('sass'),
@@ -92,25 +95,20 @@ grunt.initConfig({
 
 // SPECIFY TASKS TO RUN
 
-// Atomic tasks to process the HTML, CSS, and Javascript
-grunt.registerTask('css', ['sass', 'postcss'])
-grunt.registerTask('assets', reqTask('assets')(grunt))
-grunt.registerTask('html', ['includereplace', 'htmlmin'])
-
 // Tasks to compile the project
 // noop task to run if there are no extra files to copy
-grunt.registerTask('noop', function () {})
-grunt.registerTask('compile', ['clean', 'html', 'css', 'assets'])
+grunt.registerTask('css', ['sass', 'postcss'])
+grunt.registerTask('compile', ['clean', 'htmlChecker', 'css', 'assets'])
 grunt.registerTask('build', [
   'compile',
   'copy:dev',
-  Array.isArray(projPkg.buildCopy) ? 'copy:extra' : 'noop',
+  'copyExtras',
   'war:dev'
 ])
 grunt.registerTask('buildprod', [
   'compile',
   'copy:prod',
-  Array.isArray(projPkg.buildCopy) ? 'copy:extra' : 'noop',
+  'copyExtras',
   'war:prod'
 ])
 
@@ -120,7 +118,6 @@ grunt.registerTask('deploy', ['build', 'copy:war'])
 
 // Development task to create a watch
 grunt.registerTask('dowatch', ['build', 'copy:war', 'watch:local'])
-grunt.registerTask('scp', reqTask('scp')(grunt))
 grunt.registerTask('dowatch:scp', ['build', 'scp', 'watch:scp'])
 
 // Default task(s).
