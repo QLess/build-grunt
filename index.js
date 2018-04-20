@@ -99,16 +99,17 @@ grunt.initConfig({
 // noop task to run if there are no extra files to copy
 grunt.registerTask('css', ['sass', 'postcss'])
 grunt.registerTask('compile', ['clean', 'htmlChecker', 'css', 'assets'])
+grunt.registerTask('noop', function () {})
 grunt.registerTask('build', [
   'compile',
   'copy:dev',
-  'copyExtras',
+  (Array.isArray(projPkg.buildCopy) ? 'copyExtras' : 'noop'),
   'war:dev'
 ])
 grunt.registerTask('buildprod', [
   'compile',
   'copy:prod',
-  'copyExtras',
+  (Array.isArray(projPkg.buildCopy) ? 'copyExtras' : 'noop'),
   'war:prod'
 ])
 
