@@ -59,6 +59,10 @@ what will get deployed. `npx grunt publish` should be used instead
 Bumps the project version and then builds a WAR file that can be deployed to
 the different environments.
 
+`npx deploy`
+
+Deploys the files to QLess's test servers.
+
 By default, it will do a patch version. To use a minor or major, add `--bumpType=minor|major` after the task name.
 
 `npx grunt deploy`
