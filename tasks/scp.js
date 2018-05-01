@@ -13,9 +13,7 @@ module.exports = function (grunt) {
     }
 
     // files to copy
-    command.push(grunt.template.process(
-      'dist/<%= war.dev.options.war_name %>.war'
-    ))
+    command.push('dist/*.war')
 
     command.push('vagrantvm:/usr/local/jboss/server/default/deploy')
     command = command.join(' ')
