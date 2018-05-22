@@ -59,4 +59,5 @@ do
   ((counter++))
 done
 
-echo "------\nNew package has been deployed"
+echo "------"
+echo "New package has been deployed"
