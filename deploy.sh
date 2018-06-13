@@ -22,16 +22,16 @@ SSH_USER=${SSH_USER:-$USER}
 # The web directory on the server
 WEBSRV="/usr/local/qless"
 
-# The commands to run for QM2
-QMCMD=$(cat <<EOF
-cd "$WEBSRV"/www/qm
+# The commands to run for CEC (JBoss free)
+STATIC=$(cat <<EOF
+cd "$WEBSRV"/www/cec
 rm -Rf *
 unzip "$WEBSRV"/"$FILENAME" -d .
 EOF
 )
 
-# The commands to run for non-QM2
-NONQMCMD=$(cat <<EOF
+# The commands to run for non-CEC (JBoss dependency)
+JBOSSDEP=$(cat <<EOF
 cd /usr/local/jboss/server/default/deploy/qless/
 rm "$APP"*.war
 cp "$WEBSRV/$APP"*.war .
@@ -50,10 +50,10 @@ do
   scp "$FILEPATH" "$SSH_USER@app.test$counter.int.qless.com:$WEBSRV"
 
   echo "Test$counter: Deploying"
-  if [ "$APP" = 'QueueManager2' ]; then
-    ssh -T "$SSH_USER@app.test$counter.int.qless.com" "$QMCMD"
+  if [ "$APP" = 'CEC' ]; then
+    ssh -T "$SSH_USER@app.test$counter.int.qless.com" "$STATIC"
   else
-    ssh -T "$SSH_USER@app.test$counter.int.qless.com" "$NONQMCMD"
+    ssh -T "$SSH_USER@app.test$counter.int.qless.com" "$JBOSSDEP"
   fi
 
   ((counter++))
