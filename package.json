@@ -27,9 +27,10 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-include-replace": "^5.0.0",
     "grunt-postcss": "^0.9.0",
-    "grunt-sass": "^2.1.0",
+    "grunt-sass": "^3.0.1",
     "grunt-war": "^0.5.1",
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "node-sass": "^4.9.2"
   },
   "devDependencies": {},
   "keywords": [
