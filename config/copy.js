@@ -9,6 +9,7 @@ var ignoredFiles = [
 
 var includeFiles = [
   'app/index.html',
+  'res/fonts/**/*',
   'res/imgs/**/*',
   'res/js/lib/googleanalytics.js',
   'res/js/lib/raven.min.js',
