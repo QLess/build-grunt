@@ -83,8 +83,8 @@ grunt.initConfig({
     buildId: process.env.BUILD_ID || 0,
     buildUrl: process.env.BUILD_URL || "",
     buildTag: process.env.BUILD_TAG || "",
-    // Use short hash
-    buildCommit: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT.substring(0, 7) : "",
+    buildCommit: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT : "",
+    buildCommitShort: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT.substring(0, 7) : "",
     warNameSuffix: (process.env.BUILD_NUMBER !== undefined) ? "-" + process.env.BUILD_NUMBER : ""
   },
   pkg: projPkg,
@@ -113,12 +113,14 @@ grunt.registerTask('build', [
   'compile',
   'copy:dev',
   (Array.isArray(projPkg.buildCopy) ? 'copyExtras' : 'noop'),
+  'manifest',
   'war:dev'
 ])
 grunt.registerTask('buildprod', [
   'compile',
   'copy:prod',
   (Array.isArray(projPkg.buildCopy) ? 'copyExtras' : 'noop'),
+  'manifest',
   'war:prod'
 ])
 
