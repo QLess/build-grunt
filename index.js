@@ -78,6 +78,15 @@ var reqTask = function (task) {
 
 var projPkg = grunt.file.readJSON('package.json')
 grunt.initConfig({
+  ci: {
+    buildNumber: process.env.BUILD_NUMBER || 0,
+    buildId: process.env.BUILD_ID || 0,
+    buildUrl: process.env.BUILD_URL || "",
+    buildTag: process.env.BUILD_TAG || "",
+    buildCommit: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT : "",
+    buildCommitShort: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT.substring(0, 7) : "",
+    warNameSuffix: (process.env.BUILD_NUMBER !== undefined) ? "-" + process.env.BUILD_NUMBER : ""
+  },
   pkg: projPkg,
   bump: reqConfig('bump'),
   clean: reqConfig('clean'),
@@ -104,12 +113,14 @@ grunt.registerTask('build', [
   'compile',
   'copy:dev',
   (Array.isArray(projPkg.buildCopy) ? 'copyExtras' : 'noop'),
+  'manifest',
   'war:dev'
 ])
 grunt.registerTask('buildprod', [
   'compile',
   'copy:prod',
   (Array.isArray(projPkg.buildCopy) ? 'copyExtras' : 'noop'),
+  'manifest',
   'war:prod'
 ])
 
