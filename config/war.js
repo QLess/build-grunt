@@ -5,7 +5,7 @@ module.exports = {
 
   dev: {
     options: {
-      war_name: '<%= pkg.name %>-<%= pkg.version %>-BUILD'
+      war_name: '<%= pkg.name %>-<%= pkg.version %>-BUILD<%= ci.warNameSuffix %>'
     },
     files: [
       {
