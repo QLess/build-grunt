@@ -2,6 +2,7 @@
 var path = require('path')
 var grunt = require('grunt')
 var pkg = require('./package.json')
+var ci = require('./ci')
 
 // Get the tasks passed in to the command
 var TasksArgs = process.argv.slice(2).filter(function (task) {
@@ -79,17 +80,7 @@ var reqTask = function (task) {
 
 var projPkg = grunt.file.readJSON('package.json')
 grunt.initConfig({
-  ci: {
-    buildNumber: process.env.BUILD_NUMBER || 0,
-    buildId: process.env.BUILD_ID || 0,
-    buildBranch: process.env.BRANCH_NAME || "",
-    buildUrl: process.env.BUILD_URL || "",
-    buildTag: process.env.BUILD_TAG || "",
-    buildCommit: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT : "",
-    buildCommitShort: (process.env.GIT_COMMIT !== "" && process.env.GIT_COMMIT !== undefined) ? process.env.GIT_COMMIT.substring(0, 7) : "",
-    username: process.env.USERNAME || "jenkins",
-    warNameSuffix: (process.env.BUILD_NUMBER !== undefined) ? "-" + process.env.BUILD_NUMBER : ""
-  },
+  ci: ci,
   pkg: projPkg,
   bump: reqConfig('bump'),
   clean: reqConfig('clean'),
