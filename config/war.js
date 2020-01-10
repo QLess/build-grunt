@@ -5,7 +5,7 @@ module.exports = {
 
   dev: {
     options: {
-      war_name: '<%= pkg.name %>-<%= pkg.version %>-BUILD<%= ci.warNameSuffix %>'
+      war_name: '<%= pkg.name %>'
     },
     files: [
       {
@@ -19,7 +19,7 @@ module.exports = {
 
   prod: {
     options: {
-      war_name: '<%= pkg.name %>-<%= pkg.version %>'
+      war_name: '<%= pkg.name %>-<%= pkg.version %><%= ci.preReleaseLabel() %>'
     },
     files: [
       {
