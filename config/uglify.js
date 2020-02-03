@@ -3,6 +3,8 @@ module.exports = {
     compress: true,
     mangle: true,
     report: 'min',
-    sourceMap: true
+    sourceMap: {
+      includeSources: true,
+    }
   }
 }
