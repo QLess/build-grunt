@@ -69,3 +69,38 @@ By default, it will do a patch version. To use a minor or major, add `--bumpType
 
 Builds a local suitable WAR file and then copies it to the host computer's
 local JBoss install. Left in purely for backwards compat.
+
+## Release (Update Dependents)
+
+To push changes in `build-grunt` out to the front-ends using this tool, update the
+package version in those projects as you would for any other package.
+
+1. Create a tagged release of `build-grunt`
+
+   1. Create release branch from `develop`.
+   2. Merge release branch to `develop` and `master`.
+   3. Tag release version on `master`.
+   4. Bump version.
+
+2. Update package version for `build-grunt` in the `package.json` for each consuming project:
+
+   * APILogin
+   * CEC
+   * CIA (Calendar Integration)
+   * Calendar
+   * Monitor
+
+   ```json
+   // package.json
+   {
+      "devDependencies": {
+        "@qless/build-grunt": "git://github.com/QLess/build-grunt.git#{version-tag}"
+      }
+   }
+   ```
+
+   `{version-tag}` would be the release tag like `v1.7.0`:
+
+   ```
+   git://github.com/QLess/build-grunt.git#v1.7.0
+   ```
