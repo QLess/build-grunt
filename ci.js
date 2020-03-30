@@ -42,7 +42,7 @@ const ci = {
     }
 
     if (isReleaseCandidate) {
-      return `-rc${this.buildNumber}`;
+      return `-rc.${this.buildNumber}`;
     }
 
     const name = branch.indexOf("/") !== -1 ? branch.split("/")[1] : branch;
